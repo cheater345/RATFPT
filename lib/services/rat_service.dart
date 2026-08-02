@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RATService extends ChangeNotifier {
   bool isConnected = false;
   String peerId = '';
   String deviceInfo = '';
   bool isLoading = false;
-  RTCPeerConnection? peerConnection;
-  RTCDataChannel? dataChannel;
+  WebSocketChannel? _channel;
 
   RATService() {
     _loadDeviceInfo();
-    _initWebRTC();
   }
 
   Future<void> _loadDeviceInfo() async {
@@ -25,11 +25,6 @@ Android: ${info.version.release}
 SDK: ${info.version.sdkInt}
 ''';
     notifyListeners();
-  }
-
-  Future<void> _initWebRTC() async {
-    // Initialize WebRTC
-    await WebRTC.initialize();
   }
 
   Future<void> requestPermissions() async {
@@ -59,12 +54,15 @@ SDK: ${info.version.sdkInt}
   void disconnect() {
     isConnected = false;
     peerId = '';
+    if (_channel != null) {
+      _channel!.sink.close();
+      _channel = null;
+    }
     notifyListeners();
   }
 
   void sendCommand(String type, [String? value]) {
     if (!isConnected) return;
-    // In a real app, send via dataChannel
     print('📤 Sent: $type ${value ?? ''}');
   }
 }
