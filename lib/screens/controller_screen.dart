@@ -79,7 +79,6 @@ class _ControllerScreenState extends State<ControllerScreen> {
                 _buildCommandButton('🖥️ Mirror', () => service.sendCommand('start_mirror')),
                 _buildCommandButton('⏹️ Stop', () => service.sendCommand('stop_mirror'), color: Colors.red),
                 _buildCommandButton('💻 Shell', () => _showShellDialog(context, service)),
-                _buildCommandButton('📁 File', () => service.sendCommand('file_picker')),
                 _buildCommandButton('🔔 Notify', () => _showNotifyDialog(context, service)),
               ],
             ),
