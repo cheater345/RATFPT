@@ -125,7 +125,6 @@ class _ControllerScreenState extends State<ControllerScreen> {
           ),
           TextButton(
             onPressed: () {
-              // Send command
               Navigator.pop(_);
             },
             child: const Text('Send', style: TextStyle(color: Color(0xFF7c5cfc))),
@@ -160,7 +159,6 @@ class _ControllerScreenState extends State<ControllerScreen> {
           ),
           TextButton(
             onPressed: () {
-              // Send notification
               Navigator.pop(_);
             },
             child: const Text('Send', style: TextStyle(color: Color(0xFF7c5cfc))),
